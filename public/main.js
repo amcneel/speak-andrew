@@ -5,8 +5,6 @@ const state = 0
 const form = document.getElementById('mainform')
 const button = document.getElementById('voiceBtn')
 
-let accessToken = 'oauth_1Eo7EvmASGu7kIH6CpWFQRRRmd4'
-
 const triggerVoice = async (e) => {
   e.preventDefault()
 
