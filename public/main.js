@@ -15,16 +15,8 @@ const triggerVoice = async (e) => {
   
   button.disabled = true
 
-  await fetch("https://avatar.lyrebird.ai/api/v0/generate", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer oauth_1EobpX99c1u912Deoudkl2j9gS8",
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
-
-  })
-  .then(() => { play() })
+  const create = await fetch("/create")
+  console.log('create: ', create)
 }
 
 const play = async () => {
