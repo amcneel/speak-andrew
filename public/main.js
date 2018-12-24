@@ -19,6 +19,7 @@ const triggerVoice = async (e) => {
 
   await fetch("https://avatar.lyrebird.ai/api/v0/generate", {
     method: "POST",
+    mode: 'no-cors',
     headers: {
       Authorization: "Bearer oauth_1EoWEk0Wr2VFp1c03DzX3mnTC9h",
       "Content-Type": "application/json",
