@@ -17,13 +17,11 @@ const triggerVoice = async (e) => {
 
   await fetch("https://avatar.lyrebird.ai/api/v0/generate", {
     method: "POST",
-    mode: 'no-cors',
     headers: {
-      Authorization: "Bearer oauth_1EoaA8aeBPg6pwgG562iqwQKhyZ",
-      "Content-Type": "application/json",
-      "Cache-Control": "no-cache"
+      Authorization: "Bearer oauth_1EobpX99c1u912Deoudkl2j9gS8",
+      "Content-Type": "application/json"
     },
-    body: '{"text":"hello world"}'
+    body: JSON.stringify(data)
 
   })
   .then(() => { play() })
@@ -33,7 +31,7 @@ const play = async () => {
   const response = await fetch('https://avatar.lyrebird.ai/api/v0/generated', {
     method: "GET",
     headers: {
-      Authorization: "Bearer oauth_1EoaA8aeBPg6pwgG562iqwQKhyZ",
+      Authorization: "Bearer oauth_1EobpX99c1u912Deoudkl2j9gS8",
       "Content-Type": "application/json"
     },
   })
