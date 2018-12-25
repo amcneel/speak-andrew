@@ -8,15 +8,28 @@ const button = document.getElementById('voiceBtn')
 const triggerVoice = async (e) => {
   e.preventDefault()
 
-  const text = document.getElementById('voiceText').value
+  const t = document.getElementById('voiceText').value
   const data = {
-    text: text
+    text: t
   }
   
   button.disabled = true
 
-  const create = await fetch("/create")
-  console.log('create: ', create)
+  await fetch("/create", {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(data)
+  })
+  .then(res => res.json())
+  .then(resp => {
+    let a = new Audio(resp.audio.url)
+    a.play()
+    button.disabled = false
+  })
+  .catch(err => console.log("error: ", err))
+  // console.log('create: ', create)
 }
 
 const play = async () => {
