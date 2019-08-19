@@ -4,8 +4,8 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var fetch = require('node-fetch');
-
+// var fetch = require('node-fetch');
+require('dotenv').config()
 
 var indexRouter = require('./routes/index');
 var createRouter = require('./routes/create');
@@ -25,7 +25,6 @@ app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json());
 
 app.use('/', indexRouter);
-
 app.use('/create', createRouter);
 
 // catch 404 and forward to error handler
@@ -37,7 +36,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get('env') === 'dev' ? err : {};
 
   // render the error page
   res.status(err.status || 500);
