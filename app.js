@@ -6,11 +6,33 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 // var fetch = require('node-fetch');
 require('dotenv').config()
+const redis = require('redis')
+
+const REDIS_URL = process.env.REDIS_URL
 
 var indexRouter = require('./routes/index');
 var createRouter = require('./routes/create');
 
 var app = express();
+
+/**
+ * Cache requests
+ * Redis experiments
+ */
+/*var redis_client = redis.createClient(REDIS_URL)
+var cache = (req, res, next) => {
+  const body = req.body.text;
+  console.log('req.query:', req.body)
+  redis_client.get(body, function (err, data) {
+    if (err) throw err;
+    console.log('data', data)
+    if (data != null) {
+        res.send(respond(body, data));
+    } else {
+        next();
+    }
+  });
+}*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,6 +48,7 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/create', createRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

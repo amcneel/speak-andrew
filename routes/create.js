@@ -4,23 +4,36 @@ var fetch = require('node-fetch')
 
 var auth_token = process.env.auth_token
 
-/* GET home page. */
+var Cache = require('../middleware/cache')
+var cache = new Cache()
+
+/* Main post reception home page. */
 router.post('/', function(req, res) {
   var data = {"text": req.body.text};
-  fetch("https://avatar.lyrebird.ai/api/v0/generate", {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + auth_token,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(data)
 
-  })
-  .then(() => play())
-  .then(resp => resp.json())
-  .then(resp => {
-    res.send({'audio': resp.results[0]})
-  })
+  var checkCache = cache.getFromCache(data.text)
+  if (checkCache != null) {
+    res.send({'audio': {
+      'created_at': checkCache.created_at,
+      'url': checkCache.url,
+      'text': data.text
+    }})
+  } else {
+    fetch("https://avatar.lyrebird.ai/api/v0/generate", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + auth_token,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(() => play())
+    .then(resp => resp.json())
+    .then(resp => {
+      res.send({'audio': resp.results[0]})
+      cache.addToCache(resp.results[0])
+    })
+  }
 });
 
 var play = async () => {
