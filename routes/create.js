@@ -13,11 +13,16 @@ router.post('/', function(req, res) {
 
   var checkCache = cache.getFromCache(data.text)
   if (checkCache != null) {
-    res.send({'audio': {
-      'created_at': checkCache.created_at,
+    console.log('hit object:', checkCache)
+    // update created_at property
+    var recache = {
+      'created_at': new Date(),
       'url': checkCache.url,
       'text': data.text
-    }})
+    }
+    cache.addToCache(recache, true)
+    res.send({'audio': recache })
+
   } else {
     fetch("https://avatar.lyrebird.ai/api/v0/generate", {
       method: "POST",
@@ -31,7 +36,7 @@ router.post('/', function(req, res) {
     .then(resp => resp.json())
     .then(resp => {
       res.send({'audio': resp.results[0]})
-      cache.addToCache(resp.results[0])
+      cache.addToCache(resp.results[0], false)
     })
   }
 });
