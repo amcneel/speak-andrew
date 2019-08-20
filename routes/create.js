@@ -13,7 +13,6 @@ router.post('/', function(req, res) {
 
   var checkCache = cache.getFromCache(data.text)
   if (checkCache != null) {
-    console.log('hit object:', checkCache)
     // update created_at property
     var recache = {
       'created_at': new Date(),
