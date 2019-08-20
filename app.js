@@ -22,10 +22,8 @@ var app = express();
 /*var redis_client = redis.createClient(REDIS_URL)
 var cache = (req, res, next) => {
   const body = req.body.text;
-  console.log('req.query:', req.body)
   redis_client.get(body, function (err, data) {
     if (err) throw err;
-    console.log('data', data)
     if (data != null) {
         res.send(respond(body, data));
     } else {

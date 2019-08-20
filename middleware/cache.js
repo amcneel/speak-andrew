@@ -57,7 +57,6 @@ class Cache {
     }
   }
   removeOldestFromCache() {
-    console.log("removing oldest!")
     // sort current cache by 'created_at' property
     var keys = Object.keys(this.cache)    
     var cacheObjs = []
@@ -69,8 +68,6 @@ class Cache {
     cacheObjs.sort((a, b) => { (a.created_at > b.created_at) ? 1 : -1 })
 
     this.cache = cacheObjs.slice(1)
-
-    console.log('updated cache: ', this.cache)
     
   }
   resetCache() {

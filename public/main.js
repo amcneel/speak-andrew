@@ -26,7 +26,7 @@ const triggerVoice = async (e) => {
     a.play()
     button.disabled = false
   })
-  .catch(err => console.log("error: ", err))
+  .catch(err => console.error("error: ", err))
 }
 
 form.addEventListener('submit', triggerVoice, false)
